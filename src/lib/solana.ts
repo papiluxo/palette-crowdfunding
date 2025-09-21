@@ -1,5 +1,5 @@
 import { Connection, PublicKey, Keypair, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js'
-import { createMint, getOrCreateAssociatedTokenAccount, mintTo, transfer, TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token'
+import { createMint, getOrCreateAssociatedTokenAccount, mintTo, createTransferInstruction, TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token'
 
 const SOLANA_NETWORK = process.env.NEXT_PUBLIC_SOLANA_NETWORK || 'mainnet-beta'
 const RPC_URL = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com'
@@ -123,9 +123,7 @@ export async function purchaseTokens(params: PurchaseParams): Promise<string> {
 
     // Add USDT transfer instruction (payment to artist)
     transaction.add(
-      await transfer(
-        connection,
-        buyerWallet, // Payer and owner of source account
+      createTransferInstruction(
         buyerUSDTAccount,
         artistUSDTAccount,
         buyerWallet, // Owner of source account (will need to sign)
@@ -147,9 +145,7 @@ export async function purchaseTokens(params: PurchaseParams): Promise<string> {
 
     // Add campaign token transfer instruction (tokens from artist to buyer)
     transaction.add(
-      await transfer(
-        connection,
-        artistWallet, // Payer (artist wallet)
+      createTransferInstruction(
         artistTokenAccount,
         buyerTokenAccount,
         artistWallet, // Artist wallet needs to sign this transaction
@@ -186,9 +182,7 @@ export async function transferUSDT(params: USDTTransferParams): Promise<string> 
 
     // Add USDT transfer instruction
     transaction.add(
-      await transfer(
-        connection,
-        fromWallet, // Payer and owner of source account
+      createTransferInstruction(
         fromTokenAccount,
         toTokenAccount,
         fromWallet, // Owner of source account
