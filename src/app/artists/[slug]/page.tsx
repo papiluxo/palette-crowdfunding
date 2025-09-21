@@ -35,6 +35,11 @@ export default function ArtistProfilePage() {
 
   useEffect(() => {
     const loadArtistProfile = async () => {
+      if (!supabase) {
+        console.error('Supabase is not configured')
+        return
+      }
+
       try {
         // Load artist data
         const { data: artistData } = await supabase
