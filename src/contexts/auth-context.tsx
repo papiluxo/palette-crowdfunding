@@ -35,6 +35,8 @@ export function AuthProvider({ children }: { children: ReactNode }): React.JSX.E
 
     // Get initial session
     const getSession = async () => {
+      if (!supabase) return
+      
       try {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
