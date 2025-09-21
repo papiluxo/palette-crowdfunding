@@ -111,15 +111,15 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Button size="lg" asChild>
-                <Link href="/artists">
-                  <TrendingUp className="w-5 h-5 mr-2" />
+              <Button size="lg" asChild className="whitespace-nowrap px-6">
+                <Link href="/artists" className="inline-flex items-center">
+                  <TrendingUp className="w-5 h-5 mr-2 flex-shrink-0" />
                   Explore Campaigns
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link href="/create">
-                  <Plus className="w-5 h-5 mr-2" />
+              <Button variant="outline" size="lg" asChild className="whitespace-nowrap px-6">
+                <Link href="/create" className="inline-flex items-center">
+                  <Plus className="w-5 h-5 mr-2 flex-shrink-0" />
                   Start a Campaign
                 </Link>
               </Button>
@@ -193,9 +193,9 @@ export default function HomePage() {
               <p className="text-muted-foreground mb-6">
                 Be the first to create a campaign and start raising funds for your creative project.
               </p>
-              <Button asChild>
-                <Link href="/create">
-                  <Plus className="w-4 h-4 mr-2" />
+              <Button asChild className="whitespace-nowrap px-6">
+                <Link href="/create" className="inline-flex items-center">
+                  <Plus className="w-4 h-4 mr-2 flex-shrink-0" />
                   Create First Campaign
                 </Link>
               </Button>

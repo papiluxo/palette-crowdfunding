@@ -156,9 +156,9 @@ export default function ArtistsPage() {
                 Support creative projects and earn exclusive rewards
               </p>
             </div>
-            <Button asChild>
-              <Link href="/create" className="flex items-center">
-                <Plus className="h-4 w-4 mr-2" />
+            <Button asChild className="whitespace-nowrap px-6">
+              <Link href="/create" className="inline-flex items-center">
+                <Plus className="h-4 w-4 mr-2 flex-shrink-0" />
                 Start Your Campaign
               </Link>
             </Button>
