@@ -58,6 +58,12 @@ export default function ArtistsPage() {
   }, [searchTerm, artists])
 
   const loadArtists = async () => {
+    if (!supabase) {
+      console.error('Supabase is not configured')
+      setLoading(false)
+      return
+    }
+
     try {
       // Fetch artists from Supabase - only active campaigns (not expired)
       const { data: artistsData, error: artistsError } = await supabase
