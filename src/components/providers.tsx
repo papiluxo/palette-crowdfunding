@@ -9,7 +9,7 @@ import { AuthProvider } from '@/contexts/auth-context'
 import { PriceProvider } from '@/contexts/price-context'
 
 // Import wallet adapter CSS
-require('@solana/wallet-adapter-react-ui/styles.css')
+import '@solana/wallet-adapter-react-ui/styles.css'
 
 interface ProvidersProps {
   children: ReactNode

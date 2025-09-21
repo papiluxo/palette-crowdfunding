@@ -14,8 +14,8 @@ interface User {
 interface AuthContextType {
   user: User | null
   loading: boolean
-  signIn: (email: string, password: string) => Promise<{ error: any }>
-  signUp: (email: string, password: string, isArtist: boolean) => Promise<{ error: any }>
+  signIn: (email: string, password: string) => Promise<{ error: Error | null }>
+  signUp: (email: string, password: string, isArtist: boolean) => Promise<{ error: Error | null }>
   signOut: () => Promise<void>
 }
 
@@ -129,7 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }): React.JSX.E
         await fetchUserProfile(data.user.id)
       }
       return { error }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Sign-in failed:', err)
       return { error: { message: 'Network error. Please try again.' } }
     }
