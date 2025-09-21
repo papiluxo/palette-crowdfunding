@@ -119,7 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }): React.JSX.E
 
   const signIn = async (email: string, password: string) => {
     if (!supabase) {
-      return { error: { message: 'Supabase is not configured' } }
+      return { error: new Error('Supabase is not configured') }
     }
 
     try {
@@ -133,13 +133,13 @@ export function AuthProvider({ children }: { children: ReactNode }): React.JSX.E
       return { error }
     } catch (err: unknown) {
       console.error('Sign-in failed:', err)
-      return { error: { message: 'Network error. Please try again.' } }
+      return { error: new Error('Network error. Please try again.') }
     }
   }
 
   const signUp = async (email: string, password: string, isArtist: boolean) => {
     if (!supabase) {
-      return { error: { message: 'Supabase is not configured' } }
+      return { error: new Error('Supabase is not configured') }
     }
     
     const { data, error } = await supabase.auth.signUp({
