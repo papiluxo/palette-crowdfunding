@@ -72,7 +72,7 @@ export default function ArtistDashboard() {
   }, [user, authLoading, router])
 
   const loadDashboardData = async () => {
-    if (!user) return
+    if (!user || !supabase) return
 
     try {
       // Load artist profile
