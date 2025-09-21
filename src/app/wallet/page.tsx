@@ -73,7 +73,7 @@ export default function CollectorWallet() {
   }, [user, authLoading, connected, publicKey, router])
 
   const loadWalletData = async () => {
-    if (!connected || !publicKey) return
+    if (!connected || !publicKey || !supabase) return
 
     try {
       // Load purchases for this wallet
