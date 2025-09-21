@@ -39,7 +39,7 @@ export default function SignUpPage() {
     }
 
     try {
-      await signUp(email, password)
+      await signUp(email, password, false) // Default to patron user, not artist
       setSuccess(true)
     } catch (err: any) {
       setError(err.message || 'Failed to create account')
