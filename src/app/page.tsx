@@ -138,7 +138,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="text-3xl font-bold text-primary">${formatUSDFromSOLSync(totalRaised, solPrice)}</div>
+              <div className="text-3xl font-bold text-primary">{formatUSDFromSOLSync(totalRaised, solPrice)}</div>
               <div className="text-sm text-muted-foreground">Total Raised</div>
             </motion.div>
             <motion.div
