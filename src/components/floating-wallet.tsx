@@ -101,7 +101,7 @@ export function FloatingWallet() {
     try {
       setError('')
       setIsSelecting(true)
-      select(walletName)
+      select(walletName as any) // Cast to WalletName type
       setIsExpanded(false)
       setShowOtherProviders(false)
     } catch (e: any) {
