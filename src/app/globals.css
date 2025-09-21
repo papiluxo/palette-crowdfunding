@@ -2,25 +2,565 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+  --primary: #0a0a0a;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #0a0a0a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0a0a0a;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #0a0a0a;
+  --card-foreground: #fafafa;
+  --popover: #0a0a0a;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #0a0a0a;
+  --secondary: #262626;
+  --secondary-foreground: #fafafa;
+  --muted: #262626;
+  --muted-foreground: #a3a3a3;
+  --accent: #262626;
+  --accent-foreground: #fafafa;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fafafa;
+  --border: #262626;
+  --input: #262626;
+  --ring: #d4d4d8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-inter);
+  --radius: var(--radius);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s ease-out;
+}
+
+/* Wallet Adapter Styles */
+.wallet-adapter-button {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.wallet-adapter-button:hover {
+  opacity: 0.9;
+}
+
+.wallet-adapter-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Custom wallet button styles */
+.wallet-adapter-button-custom {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%) !important;
+  border: none !important;
+  color: hsl(var(--primary-foreground)) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  height: 3rem !important;
+  padding: 0 1.5rem !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.25) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.wallet-adapter-button-custom::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+  transition: left 0.5s !important;
+}
+
+.wallet-adapter-button-custom:hover::before {
+  left: 100% !important;
+}
+
+.wallet-adapter-button-custom:hover {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.9) 0%, hsl(var(--primary) / 0.8) 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 25px 0 hsl(var(--primary) / 0.35) !important;
+}
+
+.wallet-adapter-button-custom:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.25) !important;
+}
+
+.wallet-adapter-button-custom:focus-visible {
+  outline: 2px solid hsl(var(--primary) / 0.5) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.1) !important;
+}
+
+.wallet-adapter-button-custom:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: 0 2px 8px 0 hsl(var(--primary) / 0.15) !important;
+}
+
+/* Wallet button wrapper */
+.wallet-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Override wallet adapter text styles */
+.wallet-adapter-button-custom span {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: inherit !important;
+  letter-spacing: 0.025em !important;
+}
+
+/* Ensure wallet button text is properly aligned */
+.wallet-adapter-button-custom > * {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+}
+
+/* Force center alignment for all wallet adapter buttons */
+.wallet-adapter-button-custom {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Target the actual wallet adapter button classes */
+.wallet-adapter-button {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Target any button with wallet-adapter in the class name */
+[class*="wallet-adapter"] {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Force center alignment with maximum specificity */
+.wallet-adapter-button-custom,
+.wallet-adapter-button,
+button[class*="wallet-adapter"],
+div[class*="wallet-adapter"] button,
+.wallet-adapter-button-trigger,
+.wallet-adapter-button-disconnect {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
+
+/* Keep wallet adapter button aligned but don't override its behavior */
+.wallet-adapter-button-trigger {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Remove aggressive hiding of modal buttons to ensure wallet list is clickable */
+
+/* Target the specific wallet adapter button that appears in the popup */
+.wallet-adapter-button-custom:first-of-type,
+.wallet-adapter-button:first-of-type {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
+
+/* Wallet adapter dropdown styling */
+.wallet-adapter-modal {
+  backdrop-filter: blur(20px) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  background: hsl(var(--background)) !important;
+  border-radius: 1rem !important;
+  border: 1px solid hsl(var(--border) / 0.5) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.wallet-adapter-modal-title {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: hsl(var(--foreground)) !important;
+  text-align: center !important;
+  margin-bottom: 1rem !important;
+  letter-spacing: -0.025em !important;
+}
+
+.wallet-adapter-modal-list {
+  margin: 1.5rem 0 !important;
+}
+
+/* Style wallet button text */
+.wallet-adapter-modal-list-item span {
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  color: hsl(var(--foreground)) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Style wallet icons */
+.wallet-adapter-modal-list-item img {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 6px !important;
+  margin-right: 0.75rem !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.wallet-adapter-modal-list-item {
+  background: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 1rem !important;
+  margin: 0.75rem 0 !important;
+  padding: 1rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.wallet-adapter-modal-list-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.05), hsl(var(--secondary) / 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wallet-adapter-modal-list-item:hover {
+  background: hsl(var(--accent)) !important;
+  border-color: hsl(var(--primary) / 0.3) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px -8px hsl(var(--primary) / 0.25) !important;
+}
+
+.wallet-adapter-modal-list-item:hover::before {
+  opacity: 1;
+}
+
+.wallet-adapter-modal-list-item:active {
+  transform: translateY(0) !important;
+  transition: transform 0.1s ease !important;
+}
+
+/* Style the main "Select Wallet" button */
+.wallet-adapter-button-custom:first-of-type {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+
+/* Hide the "Change wallet" button */
+.wallet-adapter-button-custom:not(:first-of-type) {
+  display: none !important;
+}
+
+/* Remove hover, focus, and span styles since the button is hidden */
+
+.wallet-adapter-modal-wrapper {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 9999 !important;
+  animation: fadeIn 0.3s ease-out !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.wallet-adapter-modal {
+  background: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 1.5rem !important;
+  padding: 2.5rem !important;
+  max-width: 420px !important;
+  width: 90% !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  animation: slideUp 0.3s ease-out !important;
+  position: relative !important;
+  overflow: hidden !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  z-index: 10000 !important;
+  transform: none !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+/* Add close button styling */
+.wallet-adapter-modal button[aria-label="Close"] {
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 0.5rem !important;
+  background: hsl(var(--muted)) !important;
+  border: none !important;
+  color: hsl(var(--muted-foreground)) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-size: 1rem !important;
+}
+
+.wallet-adapter-modal button[aria-label="Close"]:hover {
+  background: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+  transform: scale(1.05) !important;
+}
+
+.wallet-adapter-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
+}
+
+/* Additional styling for better visual hierarchy */
+.wallet-adapter-modal-wrapper * {
+  box-sizing: border-box !important;
+}
+
+/* Ensure proper spacing and alignment */
+.wallet-adapter-modal > div {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Force wallet modal to be visible */
+.wallet-adapter-modal-wrapper,
+.wallet-adapter-modal,
+.wallet-adapter-modal * {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Override any hidden states */
+.wallet-adapter-modal-wrapper[style*="display: none"],
+.wallet-adapter-modal[style*="display: none"] {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure modal is always visible when it should be */
+.wallet-adapter-modal-wrapper:not([style*="display: none"]) {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.wallet-adapter-modal:not([style*="display: none"]) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure modal container is properly positioned */
+.wallet-adapter-modal-container {
+  position: relative !important;
+  z-index: 10001 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Style any additional text or descriptions */
+.wallet-adapter-modal p {
+  color: hsl(var(--muted-foreground)) !important;
+  font-size: 0.875rem !important;
+  text-align: center !important;
+  margin: 0.5rem 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Do not hide wallet list items; rely on provider config to control available wallets */
