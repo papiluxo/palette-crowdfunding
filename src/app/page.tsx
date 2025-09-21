@@ -210,18 +210,19 @@ export default function HomePage() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
                   <CampaignCard
-                    id={campaign.id}
-                    artistName={campaign.artist.name}
-                    artistSlug={campaign.artist.slug}
-                    title={campaign.title}
-                    blurb={campaign.blurb || ''}
-                    goalAmount={campaign.fundraising_goal}
-                    raisedAmount={campaign.raised_amount}
-                    thumbnailUrl={campaign.thumbnail_url || undefined}
-                    endDate={campaign.end_date || undefined}
-                    supporterCount={campaign.supporter_count}
-                    tokenSymbol={campaign.token_symbol}
-                    price={campaign.price}
+                    campaign={{
+                      id: campaign.id,
+                      artistName: campaign.artist.name,
+                      title: campaign.title,
+                      blurb: campaign.blurb || '',
+                      goalAmount: campaign.fundraising_goal,
+                      raisedAmount: campaign.raised_amount,
+                      thumbnailUrl: campaign.thumbnail_url || undefined,
+                      endDate: campaign.end_date || '',
+                      supporterCount: campaign.supporter_count,
+                      tokenPerks: [] // TODO: Add perks from database
+                    }}
+                    index={index}
                   />
                 </motion.div>
               ))}
