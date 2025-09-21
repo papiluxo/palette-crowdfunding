@@ -225,7 +225,7 @@ export default function CreateCampaignPage() {
         }))
 
       if (perksData.length > 0) {
-        const { error: perksError } = await supabase
+        const { error: perksError } = await supabase!
           .from('perks')
           .insert(perksData)
 
