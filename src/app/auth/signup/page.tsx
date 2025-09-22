@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -10,16 +10,25 @@ import { useAuth } from '@/contexts/auth-context'
 import { motion } from 'framer-motion'
 import { Palette, ArrowLeft, Check } from 'lucide-react'
 
-export default function SignUpPage() {
+function SignUpContent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
+  const [confirmed, setConfirmed] = useState(false)
   
   const { signUp } = useAuth()
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (searchParams.get('confirmed') === 'true') {
+      setConfirmed(true)
+      setSuccess(true)
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,14 +71,20 @@ export default function SignUpPage() {
               <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-6 w-6 text-green-600" />
               </div>
-              <CardTitle>Check your email</CardTitle>
+              <CardTitle>{confirmed ? 'Account Confirmed!' : 'Check your email'}</CardTitle>
               <CardDescription>
-                We've sent you a confirmation link at {email}
+                {confirmed 
+                  ? 'Your account has been successfully confirmed. You can now sign in.'
+                  : `We've sent you a confirmation link at ${email}`
+                }
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground text-center">
-                Click the link in the email to confirm your account and complete your registration.
+                {confirmed 
+                  ? 'Welcome to Palette! You can now sign in to start supporting artists.'
+                  : 'Click the link in the email to confirm your account and complete your registration.'
+                }
               </p>
               
               <div className="flex flex-col space-y-2">
@@ -222,5 +237,17 @@ export default function SignUpPage() {
         </motion.div>
       </div>
     </div>
+  )
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="text-lg text-muted-foreground">Loading...</div>
+      </div>
+    }>
+      <SignUpContent />
+    </Suspense>
   )
 }
