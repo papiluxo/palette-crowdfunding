@@ -33,22 +33,52 @@ export default function HomePage() {
     }
 
     try {
-      const { data, error } = await supabase
+      // First, check if campaigns table exists and get basic campaign data
+      const { data: campaignData, error: campaignError } = await supabase
         .from('campaigns')
-        .select(`
-          *,
-          artist:artists(*)
-        `)
+        .select('*')
         .eq('status', 'active')
         .order('created_at', { ascending: false })
 
-      if (error) {
-        console.error('Error fetching campaigns:', error)
+      if (campaignError) {
+        console.error('Error fetching campaigns:', campaignError)
+        setCampaigns([])
+        setLoading(false)
+        return
+      }
+
+      // If we have campaigns, try to get artist data for each
+      if (campaignData && campaignData.length > 0) {
+        const campaignIds = campaignData.map(c => c.id)
+        const { data: artistData, error: artistError } = await supabase
+          .from('artists')
+          .select('*')
+          .in('id', campaignData.map(c => c.artist_id))
+
+        if (artistError) {
+          console.error('Error fetching artists:', artistError)
+          // Still show campaigns even if artist data fails
+          setCampaigns(campaignData.map(campaign => ({
+            ...campaign,
+            artist: { name: 'Unknown Artist' }
+          })))
+        } else {
+          // Combine campaign and artist data
+          const campaignsWithArtists = campaignData.map(campaign => {
+            const artist = artistData?.find(a => a.id === campaign.artist_id)
+            return {
+              ...campaign,
+              artist: artist || { name: 'Unknown Artist' }
+            }
+          })
+          setCampaigns(campaignsWithArtists)
+        }
       } else {
-        setCampaigns(data || [])
+        setCampaigns([])
       }
     } catch (error) {
       console.error('Error fetching campaigns:', error)
+      setCampaigns([])
     } finally {
       setLoading(false)
     }
